@@ -1,0 +1,33 @@
+/* Center viewport with dark background */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #050505;
+  user-select: none;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Subtle glow effect on the SVG line */
+.loader-svg {
+  width: 90px;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+/* Monospace minimalist percentage styling */
+.loader-text {
+  color: #a0a0a0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
