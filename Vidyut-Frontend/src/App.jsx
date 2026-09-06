@@ -1,15 +1,15 @@
 
 import React, { useState } from 'react';
 import { TransformationProvider } from './context/TransformationContext';
-import { Preloader } from './Components/Preloader';
-import VidyutWormholeHero from './Components/Wormhole/VidyutWormholeHero';
-import { CustomCursor } from './Components/CustomCursor';
-import { AmbientBackground } from './Components/AmbientBackground';
-import { Navbar } from './Components/Navbar';
-import { Hero } from './Components/Hero';
-import { PassGenerator } from './Components/PassGenerator';
-import { ShareModal } from './Components/ShareModal';
-import { VidyutIntro } from './Components/VidyutIntro';
+import { Preloader } from '../Components/Preloader';
+import VidyutWormholeHero from '../Components/Wormhole/VidyutWormholeHero';
+import { CustomCursor } from '../Components/CustomCursor';
+import { AmbientBackground } from '../Components/AmbientBackground';
+import { Navbar } from '../Components/Navbar';
+import { Hero } from '../Components/Hero';
+import { PassGenerator } from '../Components/PassGenerator';
+import { ShareModal } from '../Components/ShareModal';
+import { VidyutIntro } from '../Components/VidyutIntro';
 
 function FestApp() {
   const [appStage, setAppStage] = useState('preloader');

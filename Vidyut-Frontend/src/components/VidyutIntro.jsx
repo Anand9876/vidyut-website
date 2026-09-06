@@ -1997,5 +1997,8 @@ export default function VidyutIntro({ onComplete }) {
 
       `}</style>
     </div>
+    
   );
+  
 }
+export { VidyutIntro };
