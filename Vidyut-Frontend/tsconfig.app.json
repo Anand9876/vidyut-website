@@ -5,7 +5,9 @@
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
     "types": ["vite/client"],
+
     "allowArbitraryExtensions": true,
+    "allowJs": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -22,5 +24,9 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ]
 }
