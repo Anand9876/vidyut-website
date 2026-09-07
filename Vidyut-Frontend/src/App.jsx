@@ -1,15 +1,29 @@
-
 import React, { useState } from 'react';
+
 import { TransformationProvider } from './context/TransformationContext';
-import { Preloader } from '../Components/Preloader';
-import VidyutWormholeHero from '../Components/Wormhole/VidyutWormholeHero';
-import { CustomCursor } from '../Components/CustomCursor';
-import { AmbientBackground } from '../Components/AmbientBackground';
-import { Navbar } from '../Components/Navbar';
-import { Hero } from '../Components/Hero';
-import { PassGenerator } from '../Components/PassGenerator';
-import { ShareModal } from '../Components/ShareModal';
-import { VidyutIntro } from '../Components/VidyutIntro';
+
+import { Preloader } from './components/Preloader';
+
+import VidyutWormholeHero from './components/Wormhole/VidyutWormholeHero';
+
+import { CustomCursor } from './components/CustomCursor';
+
+import { AmbientBackground } from './components/AmbientBackground';
+
+import { Navbar } from './components/Navbar';
+
+import { Hero } from './components/Hero';
+
+import { PassGenerator } from './components/PassGenerator';
+
+import { ShareModal } from './components/ShareModal';
+
+// Teammate's original VidyutIntro
+import { VidyutIntro } from './components/VidyutIntro';
+
+// Our cinematic intro
+import MVidyutIntro from './components/VidyutIntroM/page';
+
 
 function FestApp() {
   const [appStage, setAppStage] = useState('preloader');
@@ -17,12 +31,15 @@ function FestApp() {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black relative overflow-x-hidden">
+
       {/* Background Particle & Subtle Lighting Engine */}
 
       {/* Custom Precision Cursor */}
       <CustomCursor />
 
-      {/* Stage 1: Preloader Initialisation */}
+      {/* =========================================================
+          STAGE 0: PRELOADER
+          ========================================================= */}
       {appStage === 'preloader' && (
         <Preloader
           onComplete={() => setAppStage('vidyut-intro')}
@@ -30,10 +47,10 @@ function FestApp() {
       )}
 
       {/* =========================================================
-          STAGE 1: NEW VIDYUT CINEMATIC PHOTO INTRO
+          STAGE 1: OUR NEW VIDYUT CINEMATIC PHOTO INTRO
           ========================================================= */}
       {appStage === 'vidyut-intro' && (
-        <VidyutIntro
+        <MVidyutIntro
           onComplete={() => setAppStage('grimoire-story')}
         />
       )}
@@ -42,7 +59,9 @@ function FestApp() {
           STAGE 2: ORIGINAL 3D BOOK / GRIMOIRE
           ========================================================= */}
       {appStage === 'grimoire-story' && (
-        <VidyutWormholeHero onComplete={() => setAppStage('main')} />
+        <VidyutWormholeHero
+          onComplete={() => setAppStage('main')}
+        />
       )}
 
       {/* =========================================================
@@ -50,9 +69,6 @@ function FestApp() {
           Only starts with the main website.
           ========================================================= */}
       {appStage === 'main' && <AmbientBackground />}
-
-      {/* Custom Cursor */}
-      <CustomCursor />
 
       {/* =========================================================
           STAGE 3: MAIN VIDYUT WEBSITE
@@ -73,13 +89,17 @@ function FestApp() {
         </main>
       </div>
 
-      {/* Interactive Modals */}
+      {/* =========================================================
+          INTERACTIVE MODALS
+          ========================================================= */}
       <PassGenerator />
+
       <ShareModal />
 
     </div>
   );
 }
+
 
 export default function App() {
   return (
