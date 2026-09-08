@@ -1906,3 +1906,1721 @@ body {
     height: 5vh;
   }
 }
+/* =========================================================
+   VIDYUT GAMING / RESPONSIVE OVERRIDES
+========================================================= */
+
+
+/* =========================================================
+   GAMING BLACK BASE
+========================================================= */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #000000;
+}
+
+.cinematic {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #07111f 0%,
+      #02050a 45%,
+      #000000 100%
+    );
+}
+
+
+/* =========================================================
+   FULL SCREEN MONTAGE
+========================================================= */
+
+.montage {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background: #000000;
+}
+
+
+/*
+   Every image fills the entire screen.
+*/
+
+.montage-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  transform-origin: center center;
+
+  will-change:
+    transform,
+    opacity;
+
+  transition:
+    opacity .18s ease;
+}
+
+
+/* =========================================================
+   MEDIUM SPEED CAMERA MOVEMENT
+========================================================= */
+
+/*
+   Original animations were around .42s.
+
+   We make them slightly slower so the camera
+   movement can actually be seen.
+*/
+
+.movement-0.active,
+.movement-1.active,
+.movement-2.active,
+.movement-3.active,
+.movement-4.active,
+.movement-5.active,
+.movement-6.active,
+.movement-7.active,
+.movement-8.active,
+.movement-9.active,
+.movement-10.active,
+.movement-11.active,
+.movement-12.active,
+.movement-13.active,
+.movement-14.active,
+.movement-15.active {
+  animation-duration: .62s;
+}
+
+
+/* =========================================================
+   BLACK GAMING COLOR GRADE
+========================================================= */
+
+.blue-grade {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(0, 15, 35, .70),
+      transparent 48%,
+      rgba(0, 5, 15, .48)
+    );
+
+  mix-blend-mode: multiply;
+
+  pointer-events: none;
+}
+
+
+.crimson-grade {
+  background:
+    radial-gradient(
+      ellipse at 85% 20%,
+      rgba(255, 20, 80, .16),
+      transparent 45%
+    );
+
+  mix-blend-mode: screen;
+
+  pointer-events: none;
+}
+
+
+.cinematic-shadow {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, .72),
+      transparent 38%,
+      transparent 62%,
+      rgba(0, 0, 0, .72)
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   GAMING NEON VIGNETTE
+========================================================= */
+
+.vignette {
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 28%,
+      rgba(0, 0, 0, .32) 58%,
+      rgba(0, 0, 0, .96) 100%
+    );
+}
+
+
+/* =========================================================
+   INTRO — BLACK CYBER STYLE
+========================================================= */
+
+.intro {
+  background:
+    radial-gradient(
+      circle at center,
+      #071a2d 0%,
+      #030912 35%,
+      #000000 100%
+    );
+}
+
+
+.intro-blue {
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 190, 255, .30),
+      transparent 68%
+    );
+
+  filter: blur(80px);
+}
+
+
+.intro-crimson {
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 20, 80, .18),
+      transparent 70%
+    );
+
+  filter: blur(85px);
+}
+
+
+.intro-line {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 190, 255, .20),
+      #00e5ff,
+      white,
+      #7c3cff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, .8),
+    0 0 60px rgba(124, 60, 255, .35);
+}
+
+
+.intro-core {
+  background: #ffffff;
+
+  box-shadow:
+    0 0 12px #ffffff,
+    0 0 40px #00e5ff,
+    0 0 90px rgba(124, 60, 255, .8);
+}
+
+
+/* =========================================================
+   CINEMATIC BARS
+========================================================= */
+
+.cinema-top,
+.cinema-bottom {
+  background: #000000;
+}
+
+
+/* =========================================================
+   CONVERGENCE
+========================================================= */
+
+.convergence {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #07111c,
+      #000000 72%
+    );
+}
+
+
+.convergence-image,
+.second-image,
+.collapse-image {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+
+.convergence-light {
+  background: #ffffff;
+
+  box-shadow:
+    0 0 15px #ffffff,
+    0 0 45px #00e5ff,
+    0 0 100px rgba(124, 60, 255, .8);
+}
+
+
+.collapse-edge {
+  border-color:
+    rgba(0, 229, 255, .7);
+
+  box-shadow:
+    0 0 25px rgba(0, 229, 255, .65),
+    0 0 60px rgba(124, 60, 255, .35),
+    inset 0 0 25px rgba(255, 20, 80, .15);
+}
+
+
+/* =========================================================
+   LOGO SCENE — BLACK GAMING
+========================================================= */
+
+.logo-scene {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #071522 0%,
+      #020509 45%,
+      #000000 100%
+    );
+}
+
+
+/* Background image remains subtle */
+
+.logo-background {
+  background-size: cover;
+  background-position: center center;
+
+  opacity: .08;
+
+  filter:
+    saturate(.35)
+    contrast(1.5)
+    brightness(.55);
+}
+
+
+/* =========================================================
+   NEON BLUE ATMOSPHERE
+========================================================= */
+
+.logo-bg-blue {
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 190, 255, .20),
+      transparent 70%
+    );
+
+  filter: blur(85px);
+}
+
+
+/* =========================================================
+   PURPLE / RED ATMOSPHERE
+========================================================= */
+
+.logo-bg-crimson {
+  background:
+    radial-gradient(
+      circle,
+      rgba(124, 60, 255, .18),
+      transparent 70%
+    );
+
+  filter: blur(85px);
+}
+
+
+/* =========================================================
+   RESPONSIVE VIDYUT RECTANGLE
+========================================================= */
+
+.vidyut-mask {
+
+  position: relative;
+
+  width: min(88vw, 1200px);
+
+  height: clamp(
+    140px,
+    25vw,
+    330px
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   IMAGE INSIDE LOGO
+========================================================= */
+
+.vidyut-image {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  transform-origin: center center;
+}
+
+
+.vidyut-image.second {
+  opacity: .45;
+}
+
+
+/* =========================================================
+   VIDYUT TEXT
+========================================================= */
+
+.vidyut-text {
+
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  font-family:
+    "Bebas Neue",
+    sans-serif;
+
+  transform-origin: center center;
+}
+
+
+/* =========================================================
+   NEON RECTANGLE
+========================================================= */
+
+.logo-edge {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 30;
+
+  border:
+    1px solid
+    rgba(0, 229, 255, .45);
+
+  opacity: .65;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, .20),
+    inset 0 0 20px rgba(0, 229, 255, .06);
+
+}
+
+
+/* =========================================================
+   LOGO SWEEP
+========================================================= */
+
+.logo-sweep {
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, .55),
+      #00e5ff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 25px rgba(0, 229, 255, .7);
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.logo-subtitle {
+
+  color:
+    rgba(180, 235, 255, .75);
+
+  text-shadow:
+    0 0 12px rgba(0, 229, 255, .5);
+
+  white-space: nowrap;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   FINAL SCREEN
+========================================================= */
+
+.final {
+
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background: #000000;
+}
+
+
+.final-image {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  filter:
+    brightness(.45)
+    contrast(1.15)
+    saturate(.75);
+}
+
+
+.final-blue {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 180, 255, .16),
+      transparent 65%
+    );
+}
+
+
+.final-crimson {
+  background:
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(124, 60, 255, .18),
+      transparent 60%
+    );
+}
+
+
+/* =========================================================
+   FINAL VIDYUT
+========================================================= */
+
+.final-vidyut {
+
+  font-family:
+    "Bebas Neue",
+    sans-serif;
+
+  font-size:
+    clamp(
+      75px,
+      18vw,
+      280px
+    );
+
+  max-width: 95vw;
+
+  white-space: nowrap;
+
+  text-align: center;
+
+  line-height: .8;
+
+  letter-spacing:
+    clamp(
+      4px,
+      .8vw,
+      12px
+    );
+
+  padding-left:
+    clamp(
+      4px,
+      .8vw,
+      12px
+    );
+}
+
+
+/* =========================================================
+   FINAL LINE
+========================================================= */
+
+.final-line {
+
+  max-width: 80vw;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #00e5ff,
+      #7c3cff,
+      #00e5ff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 18px rgba(0, 229, 255, .7);
+}
+
+
+/* =========================================================
+   SKIP
+========================================================= */
+
+.skip {
+
+  top: 20px;
+  right: 20px;
+
+  border:
+    1px solid
+    rgba(0, 229, 255, .30);
+
+  background:
+    rgba(0, 0, 0, .65);
+
+  color:
+    rgba(210, 245, 255, .9);
+
+  box-shadow:
+    0 0 15px rgba(0, 229, 255, .08);
+
+  backdrop-filter:
+    blur(12px);
+
+  transition:
+    .25s ease;
+}
+
+
+.skip:hover {
+
+  border-color:
+    rgba(0, 229, 255, .75);
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, .25);
+
+  color: white;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+
+  background:
+    rgba(0, 229, 255, .08);
+}
+
+
+.progress div {
+
+  background:
+    linear-gradient(
+      90deg,
+      #00e5ff,
+      #7c3cff,
+      #ff1744
+    );
+
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, .5);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media screen and (max-width: 700px) {
+
+  .cinematic,
+  .montage,
+  .convergence,
+  .logo-scene,
+  .final {
+
+    width: 100vw;
+
+    height: 100vh;
+    height: 100dvh;
+
+    max-width: 100vw;
+    max-height: 100dvh;
+
+    overflow: hidden;
+  }
+
+
+  /* FULL SCREEN IMAGES */
+
+  .montage-image {
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center center;
+  }
+
+
+  /* LOGO */
+
+  .vidyut-mask {
+
+    width: 92vw;
+
+    height: clamp(
+      115px,
+      31vw,
+      200px
+    );
+
+    max-width:
+      calc(100vw - 20px);
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        58px,
+        19vw,
+        135px
+      );
+
+    letter-spacing:
+      .8vw;
+
+    padding-left:
+      .8vw;
+  }
+
+
+  .logo-edge {
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+  }
+
+
+  .vidyut-image {
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center center;
+  }
+
+
+  .logo-subtitle {
+
+    max-width: 90vw;
+
+    font-size:
+      clamp(
+        6px,
+        1.8vw,
+        8px
+      );
+
+    letter-spacing:
+      clamp(
+        1.5px,
+        .7vw,
+        3px
+      );
+  }
+
+
+  .final-vidyut {
+
+    font-size:
+      clamp(
+        58px,
+        18vw,
+        120px
+      );
+
+    letter-spacing:
+      4px;
+
+    padding-left:
+      4px;
+  }
+
+
+  .final-line {
+
+    width:
+      60vw;
+
+    max-width:
+      60vw;
+
+    margin:
+      18px auto;
+  }
+
+
+  .skip {
+
+    top: 12px;
+
+    right: 12px;
+
+    padding:
+      7px 10px;
+
+    font-size:
+      8px;
+
+    letter-spacing:
+      2px;
+  }
+
+
+  .cinema-top,
+  .cinema-bottom {
+
+    height:
+      3.5%;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media screen and (max-width: 480px) {
+
+  .vidyut-mask {
+
+    width: 94vw;
+
+    height:
+      clamp(
+        105px,
+        30vw,
+        160px
+      );
+
+    max-width:
+      calc(100vw - 12px);
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        50px,
+        18vw,
+        100px
+      );
+
+    letter-spacing:
+      .5vw;
+
+    padding-left:
+      .5vw;
+  }
+
+
+  .logo-edge {
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .logo-subtitle {
+
+    font-size:
+      6px;
+
+    letter-spacing:
+      1.5px;
+
+    max-width:
+      92vw;
+  }
+
+
+  .final-vidyut {
+
+    font-size:
+      18vw;
+
+    letter-spacing:
+      3px;
+
+    padding-left:
+      3px;
+  }
+
+
+  .final-line {
+
+    width:
+      58vw;
+
+    margin:
+      15px auto;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media screen and (max-width: 360px) {
+
+  .vidyut-mask {
+
+    width: 95vw;
+
+    height:
+      100px;
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      53px;
+
+    letter-spacing:
+      1px;
+
+    padding-left:
+      1px;
+  }
+
+
+  .logo-subtitle {
+
+    font-size:
+      5px;
+
+    letter-spacing:
+      1px;
+  }
+
+
+  .skip {
+
+    top: 9px;
+
+    right: 9px;
+
+    padding:
+      6px 8px;
+
+    font-size:
+      7px;
+  }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONES
+========================================================= */
+
+@media screen and
+       (max-height: 500px)
+       and
+       (orientation: landscape) {
+
+  .vidyut-mask {
+
+    width:
+      min(78vw, 900px);
+
+    height:
+      min(45vh, 170px);
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        48px,
+        15vh,
+        100px
+      );
+  }
+
+
+  .logo-subtitle {
+
+    font-size:
+      6px;
+
+    letter-spacing:
+      2px;
+  }
+
+
+  .skip {
+
+    top: 8px;
+
+    right: 10px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media screen
+       and
+       (min-width: 701px)
+       and
+       (max-width: 1100px) {
+
+  .vidyut-mask {
+
+    width:
+      90vw;
+
+    height:
+      clamp(
+        150px,
+        27vw,
+        260px
+      );
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        85px,
+        19vw,
+        190px
+      );
+  }
+}
+
+
+/* =========================================================
+   VERY LARGE DESKTOP
+========================================================= */
+
+@media screen and
+       (min-width: 1600px) {
+
+  .vidyut-mask {
+
+    width:
+      min(82vw, 1200px);
+
+    height:
+      min(24vw, 330px);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration:
+      .01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      .01ms !important;
+  }
+}
+/* =========================================================
+   FINAL RESPONSIVE VIDYUT LOGO POSITION
+   ========================================================= */
+
+/* Full screen logo scene */
+.logo-scene {
+  position: fixed !important;
+
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(5, 20, 32, 0.65),
+      #020405 55%,
+      #000000 100%
+    ) !important;
+}
+
+
+/* =========================================================
+   REMOVE THE BLUE HORIZONTAL LINE
+   ========================================================= */
+
+/* This is the animated sweep */
+.logo-sweep {
+  display: none !important;
+}
+
+
+/* If the line is coming from the logo edge,
+   remove its glow but keep the rectangle */
+.logo-edge {
+  box-shadow: none !important;
+
+  border-color:
+    rgba(255, 255, 255, 0.35) !important;
+}
+
+
+/* =========================================================
+   CENTER RECTANGLE
+   ========================================================= */
+
+.vidyut-mask {
+
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  transform:
+    translate(-50%, -50%) !important;
+
+  width:
+    min(82vw, 1200px) !important;
+
+  height:
+    clamp(
+      150px,
+      24vw,
+      320px
+    ) !important;
+
+  margin: 0 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  overflow: hidden !important;
+
+  isolation: isolate !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   IMAGES INSIDE RECTANGLE
+   ========================================================= */
+
+.vidyut-image {
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  background-size: cover !important;
+
+  background-position: center center !important;
+
+  background-repeat: no-repeat !important;
+
+  transform-origin: center center !important;
+}
+
+
+/* Second image */
+.vidyut-image.second {
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  background-size: cover !important;
+
+  background-position: center center !important;
+}
+
+
+/* =========================================================
+   VIDYUT TEXT
+   ========================================================= */
+
+.vidyut-text {
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  z-index: 10 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  white-space: nowrap !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  /* Keep your existing font */
+  font-family:
+    "Bebas Neue",
+    sans-serif !important;
+
+  line-height: 1 !important;
+
+  transform-origin: center center !important;
+}
+
+
+/* =========================================================
+   RECTANGLE BORDER
+   ========================================================= */
+
+.logo-edge {
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  z-index: 20 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  box-sizing: border-box !important;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.35) !important;
+
+  border-radius: 2px !important;
+
+  pointer-events: none !important;
+
+  box-shadow:
+    inset 0 0 20px rgba(255, 255, 255, 0.03) !important;
+}
+
+
+/* =========================================================
+   SUBTITLE
+   ========================================================= */
+
+.logo-subtitle {
+
+  position: absolute !important;
+
+  left: 50% !important;
+
+  top: calc(50% + clamp(100px, 15vw, 190px)) !important;
+
+  transform:
+    translateX(-50%) !important;
+
+  width: 90vw !important;
+
+  text-align: center !important;
+
+  white-space: nowrap !important;
+
+  margin: 0 !important;
+
+  color:
+    rgba(255, 255, 255, 0.42) !important;
+
+  letter-spacing:
+    clamp(3px, 0.7vw, 8px) !important;
+}
+
+
+/* =========================================================
+   REMOVE ANY EXTRA BLUE GLOW FROM LOGO SCENE
+   ========================================================= */
+
+.logo-bg-blue {
+
+  opacity: 0.35 !important;
+}
+
+
+.logo-bg-crimson {
+
+  opacity: 0.20 !important;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media screen and (min-width: 1201px) {
+
+  .vidyut-mask {
+
+    width:
+      min(72vw, 1200px) !important;
+
+    height:
+      min(24vw, 320px) !important;
+  }
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        100px,
+        13vw,
+        190px
+      ) !important;
+  }
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + 190px) !important;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP / TABLET
+   ========================================================= */
+
+@media screen
+and (min-width: 701px)
+and (max-width: 1200px) {
+
+  .vidyut-mask {
+
+    width:
+      82vw !important;
+
+    height:
+      clamp(
+        145px,
+        25vw,
+        270px
+      ) !important;
+  }
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        80px,
+        15vw,
+        155px
+      ) !important;
+  }
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + 155px) !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media screen and (max-width: 700px) {
+
+  .logo-scene {
+
+    width: 100vw !important;
+
+    height: 100vh !important;
+    height: 100dvh !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+
+  .vidyut-mask {
+
+    left: 50% !important;
+    top: 50% !important;
+
+    transform:
+      translate(-50%, -50%) !important;
+
+    width:
+      92vw !important;
+
+    height:
+      clamp(
+        105px,
+        30vw,
+        185px
+      ) !important;
+
+    max-width:
+      calc(100vw - 20px) !important;
+
+    max-height:
+      40vh !important;
+  }
+
+
+  .vidyut-text {
+
+    width: 100% !important;
+    height: 100% !important;
+
+    font-size:
+      clamp(
+        55px,
+        18vw,
+        120px
+      ) !important;
+
+    line-height: 1 !important;
+
+    letter-spacing:
+      1px !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+
+  .logo-edge {
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    display: block !important;
+
+    border-width: 1px !important;
+  }
+
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + clamp(75px, 18vw, 115px)) !important;
+
+    left: 50% !important;
+
+    width: 92vw !important;
+
+    font-size:
+      clamp(
+        6px,
+        1.8vw,
+        8px
+      ) !important;
+
+    letter-spacing:
+      clamp(
+        1.5px,
+        0.7vw,
+        3px
+      ) !important;
+
+    text-align: center !important;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media screen and (max-width: 480px) {
+
+  .vidyut-mask {
+
+    width:
+      94vw !important;
+
+    height:
+      clamp(
+        100px,
+        29vw,
+        145px
+      ) !important;
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        48px,
+        18vw,
+        90px
+      ) !important;
+
+    letter-spacing:
+      0 !important;
+  }
+
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + 82px) !important;
+
+    font-size:
+      6px !important;
+
+    letter-spacing:
+      1.5px !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media screen and (max-width: 360px) {
+
+  .vidyut-mask {
+
+    width:
+      95vw !important;
+
+    height:
+      100px !important;
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      52px !important;
+  }
+
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + 68px) !important;
+
+    font-size:
+      5px !important;
+
+    letter-spacing:
+      1px !important;
+  }
+}
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+   ========================================================= */
+
+@media screen
+and (max-height: 500px)
+and (orientation: landscape) {
+
+  .vidyut-mask {
+
+    width:
+      min(78vw, 850px) !important;
+
+    height:
+      min(52vh, 180px) !important;
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      clamp(
+        55px,
+        17vh,
+        110px
+      ) !important;
+  }
+
+
+  .logo-subtitle {
+
+    top:
+      calc(50% + 100px) !important;
+
+    font-size:
+      6px !important;
+  }
+}
+
+
+/* =========================================================
+   ULTRA WIDE SCREENS
+   ========================================================= */
+
+@media screen and (min-width: 1800px) {
+
+  .vidyut-mask {
+
+    width:
+      68vw !important;
+
+    max-width:
+      1250px !important;
+
+    height:
+      300px !important;
+  }
+
+
+  .vidyut-text {
+
+    font-size:
+      190px !important;
+  }
+}

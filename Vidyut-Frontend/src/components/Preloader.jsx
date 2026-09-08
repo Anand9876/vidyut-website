@@ -23,11 +23,11 @@ export const Preloader = ({ onComplete }) => {
         // Holds the fully drawn outline for a second before finishing
         setTimeout(() => {
           onComplete();
-        }, 1200); 
+        }, 300); 
       } else {
         setPercent(current);
       }
-    }, 50); 
+    }, 30); 
 
     return () => clearInterval(interval);
   }, [onComplete]);

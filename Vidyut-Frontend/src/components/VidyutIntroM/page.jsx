@@ -2,42 +2,58 @@ import "./global.css";
 
 import { useEffect, useState } from "react";
 
+import image1 from "../../assets/img1.jpeg";
+import image2 from "../../assets/img2.jpeg";
+import image3 from "../../assets/img3.jpeg";
+import image4 from "../../assets/img4.jpeg";
+import image5 from "../../assets/img5.jpeg";
+import image6 from "../../assets/img6.jpeg";
+import image7 from "../../assets/img7.jpeg";
+import image8 from "../../assets/img8.jpeg";
+import image9 from "../../assets/img9.jpeg";
+import image10 from "../../assets/img10.jpeg";
+import image11 from "../../assets/img11.jpeg";
+
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
 const images = [
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=2400&q=90",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=2400&q=90",
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+  image10,
+  image11,
 ];
+
 
 /* =========================================================
    TIMING
+   Medium cinematic speed
 ========================================================= */
 
-const INTRO_TIME = 700;
+const INTRO_TIME = 850;
 
-const IMAGE_TIME = 150;
+const IMAGE_TIME = 280;
 
-const MONTAGE_TIME = images.length * IMAGE_TIME;
+const MONTAGE_TIME =
+  images.length * IMAGE_TIME;
 
-const CONVERGENCE_TIME = 650;
+const CONVERGENCE_TIME = 850;
 
-const LOGO_TIME = 2200;
+const LOGO_TIME = 2400;
 
-const FINAL_TIME = 1300;
+const FINAL_TIME = 100;
 
-const MONTAGE_START = INTRO_TIME;
+const MONTAGE_START =
+  INTRO_TIME;
 
 const CONVERGENCE_START =
   MONTAGE_START + MONTAGE_TIME;
@@ -57,44 +73,63 @@ const TOTAL_TIME =
 ========================================================= */
 
 export function VidyutIntro({ onComplete }) {
+
   const [time, setTime] = useState(0);
-  const [paused, setPaused] = useState(false);
+
+  const [paused, setPaused] =
+    useState(false);
+
 
   /* =======================================================
      TIMER
   ======================================================= */
 
   useEffect(() => {
+
     if (paused) return;
 
-    const start = Date.now() - time;
+    const start =
+      Date.now() - time;
 
-    const timer = setInterval(() => {
-      const current = Date.now() - start;
+    const timer =
+      setInterval(() => {
 
-      if (current >= TOTAL_TIME) {
-        setTime(TOTAL_TIME);
-        setPaused(true);
+        const current =
+          Date.now() - start;
 
-        if (onComplete) {
-          onComplete();
+        if (current >= TOTAL_TIME) {
+
+          setTime(TOTAL_TIME);
+
+          setPaused(true);
+
+          if (onComplete) {
+            onComplete();
+          }
+
+          return;
         }
 
-        return;
-      }
+        setTime(current);
 
-      setTime(current);
-    }, 16);
+      }, 16);
 
-    return () => clearInterval(timer);
-  }, [paused, onComplete, time]);
+    return () =>
+      clearInterval(timer);
+
+  }, [
+    paused,
+    onComplete,
+    time,
+  ]);
 
 
   /* =======================================================
      PHASES
   ======================================================= */
 
-  const intro = time < MONTAGE_START;
+  const intro =
+    time < MONTAGE_START;
 
   const montage =
     time >= MONTAGE_START &&
@@ -117,33 +152,45 @@ export function VidyutIntro({ onComplete }) {
   ======================================================= */
 
   let activeImage = 0;
+
   let imageProgress = 0;
 
   if (montage) {
+
     const elapsed =
       time - MONTAGE_START;
 
     activeImage =
-      Math.floor(elapsed / IMAGE_TIME) %
-      images.length;
+      Math.floor(
+        elapsed / IMAGE_TIME
+      ) % images.length;
 
     imageProgress =
       (elapsed % IMAGE_TIME) /
       IMAGE_TIME;
   }
 
-  if (convergence || logo || final) {
+  if (
+    convergence ||
+    logo ||
+    final
+  ) {
+
     const elapsed =
-      Math.max(0, time - MONTAGE_START);
+      Math.max(
+        0,
+        time - MONTAGE_START
+      );
 
     activeImage =
-      Math.floor(elapsed / IMAGE_TIME) %
-      images.length;
+      Math.floor(
+        elapsed / IMAGE_TIME
+      ) % images.length;
   }
 
 
   /* =======================================================
-     CONVERGENCE PROGRESS
+     CONVERGENCE
   ======================================================= */
 
   const convergenceProgress =
@@ -159,7 +206,7 @@ export function VidyutIntro({ onComplete }) {
 
 
   /* =======================================================
-     LOGO PROGRESS
+     LOGO
   ======================================================= */
 
   const logoProgress =
@@ -175,7 +222,7 @@ export function VidyutIntro({ onComplete }) {
 
 
   /* =======================================================
-     FINAL PROGRESS
+     FINAL
   ======================================================= */
 
   const finalProgress =
@@ -183,7 +230,7 @@ export function VidyutIntro({ onComplete }) {
       ? Math.min(
           1,
           (time - FINAL_START) /
-            1000
+            1100
         )
       : 0;
 
@@ -193,7 +240,9 @@ export function VidyutIntro({ onComplete }) {
   ======================================================= */
 
   const skip = () => {
+
     setTime(FINAL_START);
+
     setPaused(true);
   };
 
@@ -203,16 +252,17 @@ export function VidyutIntro({ onComplete }) {
   ======================================================= */
 
   return (
+
     <main
       className="cinematic"
       onClick={() =>
-        setPaused((value) => !value)
+        setPaused(
+          (value) => !value
+        )
       }
     >
 
-      {/* ===================================================
-          GRAIN
-      =================================================== */}
+      {/* GRAIN */}
 
       <div className="grain" />
 
@@ -224,6 +274,7 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       {intro && (
+
         <section className="intro">
 
           <div className="intro-blue" />
@@ -237,7 +288,6 @@ export function VidyutIntro({ onComplete }) {
           <div className="intro-core" />
 
           <div className="intro-text">
-            V
           </div>
 
         </section>
@@ -249,28 +299,34 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       {montage && (
+
         <section className="montage">
 
-          {images.map((image, index) => (
-            <div
-              key={image}
-              className={`
-                montage-image
-                movement-${index}
-                ${
-                  index === activeImage
-                    ? "active"
-                    : ""
-                }
-              `}
-              style={{
-                backgroundImage:
-                  `url("${image}")`,
-                "--image-progress":
-                  imageProgress,
-              }}
-            />
-          ))}
+          {images.map(
+            (image, index) => (
+
+              <div
+                key={image}
+                className={`
+                  montage-image
+                  movement-${index}
+                  ${
+                    index === activeImage
+                      ? "active"
+                      : ""
+                  }
+                `}
+                style={{
+                  backgroundImage:
+                    `url("${image}")`,
+
+                  "--image-progress":
+                    imageProgress,
+                }}
+              />
+
+            )
+          )}
 
           <div className="blue-grade" />
 
@@ -282,10 +338,11 @@ export function VidyutIntro({ onComplete }) {
             className="cut-flash"
             style={{
               opacity:
-                imageProgress > 0.82
-                  ? (imageProgress - 0.82) /
-                    0.18 *
-                    0.65
+                imageProgress > 0.88
+                  ? (
+                      (imageProgress - 0.88) /
+                      0.12
+                    ) * 0.45
                   : 0,
             }}
           />
@@ -303,6 +360,7 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       {convergence && (
+
         <section
           className="convergence"
           style={{
@@ -345,12 +403,16 @@ export function VidyutIntro({ onComplete }) {
           <div
             className="collapse-image"
             style={{
+              backgroundImage:
+                `url("${images[activeImage]}")`,
+
               transform:
                 `scale(${
                   1 -
                   convergenceProgress *
                     0.92
                 })`,
+
               opacity:
                 1 -
                 convergenceProgress *
@@ -365,10 +427,11 @@ export function VidyutIntro({ onComplete }) {
 
 
       {/* ===================================================
-          LOGO
+          VIDYUT LOGO
       =================================================== */}
 
       {logo && (
+
         <section
           className="logo-scene"
           style={{
@@ -382,6 +445,7 @@ export function VidyutIntro({ onComplete }) {
           <div className="logo-bg-blue" />
 
           <div className="logo-bg-crimson" />
+
 
           <div
             className="vidyut-mask"
@@ -421,6 +485,7 @@ export function VidyutIntro({ onComplete }) {
                     logoProgress *
                       0.3
                   })`,
+
                 opacity:
                   logoProgress,
               }}
@@ -431,6 +496,7 @@ export function VidyutIntro({ onComplete }) {
             <div className="logo-edge" />
 
           </div>
+
 
           <div
             className="logo-sweep"
@@ -444,19 +510,20 @@ export function VidyutIntro({ onComplete }) {
             }}
           />
 
+
           <div
             className="logo-subtitle"
             style={{
               opacity:
                 Math.max(
                   0,
-                  (logoProgress -
-                    0.45) /
-                    0.55
+                  (
+                    logoProgress -
+                    0.45
+                  ) / 0.55
                 ),
             }}
           >
-            ELECTRIFYING INNOVATION
           </div>
 
         </section>
@@ -468,6 +535,7 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       {final && (
+
         <section
           className="final"
           style={{
@@ -488,38 +556,6 @@ export function VidyutIntro({ onComplete }) {
             }}
           />
 
-          <div className="final-content">
-
-            <div
-              className="final-vidyut"
-              style={{
-                opacity:
-                  finalProgress,
-                transform:
-                  `scale(${
-                    0.92 +
-                    finalProgress *
-                      0.08
-                  })`,
-              }}
-            >
-              VIDYUT
-            </div>
-
-            <div
-              className="final-line"
-              style={{
-                transform:
-                  `scaleX(${
-                    finalProgress
-                  })`,
-                opacity:
-                  finalProgress,
-              }}
-            />
-
-          </div>
-
           <div
             className="final-sweep"
             style={{
@@ -537,15 +573,19 @@ export function VidyutIntro({ onComplete }) {
 
 
       {/* ===================================================
-          SKIP BUTTON
+          SKIP
       =================================================== */}
 
       {!final && (
+
         <button
           className="skip"
           onClick={(event) => {
+
             event.stopPropagation();
+
             skip();
+
           }}
         >
           SKIP
@@ -558,6 +598,7 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       <div className="progress">
+
         <div
           style={{
             width:
@@ -568,6 +609,7 @@ export function VidyutIntro({ onComplete }) {
               )}%`,
           }}
         />
+
       </div>
 
 
@@ -576,18 +618,16 @@ export function VidyutIntro({ onComplete }) {
       =================================================== */}
 
       {paused && !final && (
+
         <div className="paused">
           PAUSED
         </div>
+
       )}
 
     </main>
   );
 }
 
-
-/* =========================================================
-   DEFAULT EXPORT
-========================================================= */
 
 export default VidyutIntro;
