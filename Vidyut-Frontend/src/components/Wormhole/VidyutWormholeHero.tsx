@@ -376,16 +376,27 @@ function LogoFragments({
 
   if (!isVisible) return null;
 
+  // Responsive rectangular logo formation.
+  // The 8 x 4 fragment grid is kept, but the final formation is
+  // intentionally wider than it is tall so the logo reads as a
+  // clean horizontal rectangle on every screen size.
   const logoWidth =
     tier === "smallMobile"
-      ? 250
+      ? 280
       : tier === "mobile"
-        ? 320
+        ? 360
         : tier === "tablet"
-          ? 460
-          : 560;
+          ? 500
+          : 620;
 
-  const logoHeight = logoWidth;
+  const logoHeight =
+    tier === "smallMobile"
+      ? 165
+      : tier === "mobile"
+        ? 210
+        : tier === "tablet"
+          ? 295
+          : 365;
 
   const pieceWidth = logoWidth / PIECE_COLUMNS;
   const pieceHeight = logoHeight / PIECE_ROWS;
@@ -469,8 +480,9 @@ function LogoFragments({
         );
       })}
 
-      {/* A complete copy fades in very briefly after the pieces lock together.
-          This makes the final reconstruction clean even while tiny seams disappear. */}
+      {/* The complete rectangular logo fades in after all fragments lock together.
+          It uses the same width/height as the fragment formation so the final
+          image has the exact same rectangular proportions. */}
       <motion.img
         src="/images/v-logo.jpg"
         alt="Vidyut logo"
@@ -808,7 +820,7 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
           fontSize: isSmallMobile ? "clamp(1.35rem, 8.6vw, 2rem)" : "clamp(2rem, 8vw, 5.5rem)",
           textShadow:
             "0 0 20px rgba(255,255,255,0.35), 0 0 50px rgba(18,59,140,0.62), 0 0 85px rgba(220,20,60,0.38)",
-          fontFamily: "'Chakra Petch', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          fontFamily: "'Frontage Bulb', sans-serif",
           margin: 0,
           pointerEvents: "none",
         }}
@@ -827,7 +839,7 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
           left: 0,
           right: 0,
           textAlign: "center",
-          fontFamily: "'Chakra Petch', sans-serif",
+          fontFamily: "'Frontage Bulb', sans-serif",
           fontSize: isSmallMobile ? "0.5rem" : "0.68rem",
           letterSpacing: "0.38em",
           color: "rgba(220,235,255,0.82)",

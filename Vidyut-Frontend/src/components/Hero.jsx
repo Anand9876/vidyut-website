@@ -213,13 +213,14 @@ export const Hero = ({ onNavbarReady }) => {
             {/* =================================================
                 VIDYUT
 
-                CHAKRA PETCH
+                FRONTAGE BULB FONT
                 NO ROTATION
             ================================================== */}
 
             <h1
               className="
                 relative
+                font-frontage
                 font-black
                 tracking-[0.10em]
                 sm:tracking-[0.10em]
@@ -240,11 +241,6 @@ export const Hero = ({ onNavbarReady }) => {
                 to-[#64748b]
                 drop-shadow-[0_4px_25px_rgba(0,0,0,0.95)]
               "
-            style={{
-  fontFamily: "'Chakra Petch', sans-serif",
-  fontWeight: 700,
-  letterSpacing: '0.10em',
-}}
             >
               VIDYUT
             </h1>
