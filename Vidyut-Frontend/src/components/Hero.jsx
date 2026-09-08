@@ -240,15 +240,11 @@ export const Hero = ({ onNavbarReady }) => {
                 to-[#64748b]
                 drop-shadow-[0_4px_25px_rgba(0,0,0,0.95)]
               "
-              style={{
-                fontFamily:
-                  "'Chakra Petch', sans-serif",
-
-                fontWeight: 700,
-
-                letterSpacing:
-                  '0.10em',
-              }}
+            style={{
+  fontFamily: "'Chakra Petch', sans-serif",
+  fontWeight: 700,
+  letterSpacing: '0.10em',
+}}
             >
               VIDYUT
             </h1>
