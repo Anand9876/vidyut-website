@@ -394,12 +394,7 @@ export function VidyutIntro({ onComplete }) {
               backgroundImage:
                 `url("${images[activeImage]}")`,
 
-              transform:
-                `scale(${
-                  1 -
-                  convergenceProgress *
-                    0.92
-                })`,
+            transform: "scale(1)",
 
               opacity:
                 1 -
@@ -407,8 +402,6 @@ export function VidyutIntro({ onComplete }) {
                   0.5,
             }}
           />
-
-          <div className="collapse-edge" />
 
         </section>
       )}
