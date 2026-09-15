@@ -289,7 +289,7 @@ export const Hero = ({ onNavbarReady }) => {
             mt-6
             sm:mt-8
             w-full
-            max-w-2xl
+            max-w-xl
             mx-auto
             transition-all
             duration-700
@@ -306,10 +306,10 @@ export const Hero = ({ onNavbarReady }) => {
             className="
               grid
               grid-cols-4
-              gap-2.5
-              sm:gap-4
-              p-3
-              sm:p-4
+              gap-2
+              sm:gap-3
+              p-2
+              sm:p-3
               rounded-2xl
               border
               border-white/15
@@ -325,8 +325,8 @@ export const Hero = ({ onNavbarReady }) => {
 
             <div
               className="
-                p-2.5
-                sm:p-4
+                p-2
+                sm:p-3
                 rounded-xl
                 border
                 border-white/10
@@ -342,9 +342,9 @@ export const Hero = ({ onNavbarReady }) => {
 
               <span
                 className="
-                  text-3xl
-                  sm:text-4xl
-                  md:text-5xl
+                  text-2xl
+                  sm:text-3xl
+                  md:text-4xl
                   font-impact
                   font-bold
                   text-transparent
@@ -383,8 +383,8 @@ export const Hero = ({ onNavbarReady }) => {
 
             <div
               className="
-                p-2.5
-                sm:p-4
+                p-2
+                sm:p-3
                 rounded-xl
                 border
                 border-white/10
@@ -400,9 +400,9 @@ export const Hero = ({ onNavbarReady }) => {
 
               <span
                 className="
-                  text-3xl
-                  sm:text-4xl
-                  md:text-5xl
+                  text-2xl
+                  sm:text-3xl
+                  md:text-4xl
                   font-impact
                   font-bold
                   text-transparent
@@ -441,8 +441,8 @@ export const Hero = ({ onNavbarReady }) => {
 
             <div
               className="
-                p-2.5
-                sm:p-4
+                p-2
+                sm:p-3
                 rounded-xl
                 border
                 border-white/10
@@ -458,9 +458,9 @@ export const Hero = ({ onNavbarReady }) => {
 
               <span
                 className="
-                  text-3xl
-                  sm:text-4xl
-                  md:text-5xl
+                  text-2xl
+                  sm:text-3xl
+                  md:text-4xl
                   font-impact
                   font-bold
                   text-transparent
@@ -499,8 +499,8 @@ export const Hero = ({ onNavbarReady }) => {
 
             <div
               className="
-                p-2.5
-                sm:p-4
+                p-2
+                sm:p-3
                 rounded-xl
                 border
                 border-white/10
@@ -540,18 +540,6 @@ export const Hero = ({ onNavbarReady }) => {
                   {String(timeLeft.seconds).padStart(2, '0')}
                 </span>
 
-                <span
-                  className="
-                    text-[10px]
-                    sm:text-xs
-                    font-mono
-                    text-crimson-accent
-                    font-bold
-                    ml-0.5
-                  "
-                >
-                  .{String(timeLeft.milliseconds).padStart(2, '0')}
-                </span>
 
               </div>
 

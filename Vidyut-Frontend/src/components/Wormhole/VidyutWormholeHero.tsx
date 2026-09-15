@@ -331,8 +331,6 @@ function LogoFragments({
         const row = Math.floor(index / PIECE_COLUMNS);
         const column = index % PIECE_COLUMNS;
 
-        // 8 directions are used repeatedly so the pieces visibly arrive
-        // from every side and every corner of the screen.
         const directions = [
           { x: 0, y: -1 },
           { x: 0.72, y: -0.72 },
@@ -376,10 +374,6 @@ function LogoFragments({
 
   if (!isVisible) return null;
 
-  // Responsive rectangular logo formation.
-  // The 8 x 4 fragment grid is kept, but the final formation is
-  // intentionally wider than it is tall so the logo reads as a
-  // clean horizontal rectangle on every screen size.
   const logoWidth =
     tier === "smallMobile"
       ? 280
@@ -416,9 +410,6 @@ function LogoFragments({
       }}
     >
       {fragments.map((piece) => {
-        const backgroundPositionX = `${-(piece.column * pieceWidth)}px`;
-        const backgroundPositionY = `${-(piece.row * pieceHeight)}px`;
-
         const initial = {
           x: piece.x,
           y: piece.y,
@@ -463,26 +454,36 @@ function LogoFragments({
               top: piece.row * pieceHeight,
               width: pieceWidth + 1,
               height: pieceHeight + 1,
-              overflow: "hidden",
+              overflow: "hidden", 
               transformStyle: "preserve-3d",
               backfaceVisibility: "visible",
-              backgroundImage: `url("/images/v-logo.jpg")`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: `${logoWidth}px ${logoHeight}px`,
-              backgroundPosition: `${backgroundPositionX} ${backgroundPositionY}`,
-              backgroundColor: "transparent",
+              backgroundColor: "#000000",
               border: "1px solid rgba(120, 180, 255, 0.12)",
               boxSizing: "border-box",
               boxShadow:
                 "0 0 12px rgba(47,107,255,0.20), inset 0 0 8px rgba(220,20,60,0.10)",
             }}
-          />
+          >
+            <img
+              src="/images/v-logo.jpg"
+              alt=""
+              style={{
+                position: "absolute",
+                left: -(piece.column * pieceWidth),
+                top: -(piece.row * pieceHeight),
+                width: logoWidth,
+                height: logoHeight,
+                maxWidth: "none",
+                maxHeight: "none",
+                objectFit: "contain", 
+                zIndex: -1,
+                pointerEvents: "none",
+              }}
+            />
+          </motion.div>
         );
       })}
 
-      {/* The complete rectangular logo fades in after all fragments lock together.
-          It uses the same width/height as the fragment formation so the final
-          image has the exact same rectangular proportions. */}
       <motion.img
         src="/images/v-logo.jpg"
         alt="Vidyut logo"
@@ -500,7 +501,8 @@ function LogoFragments({
           inset: 0,
           width: "100%",
           height: "100%",
-          objectFit: "fill",
+          objectFit: "contain",
+          backgroundColor: "#000000",
           display: "block",
           pointerEvents: "none",
           filter:
@@ -554,8 +556,6 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
   const [stage, setStage] = useState<IntroStage>("intro");
   const stageTimerRef = useRef<number | null>(null);
   const stageRef = useRef<IntroStage>("intro");
-  const triggeredRef = useRef(false);
-  const lastMouseRef = useRef({ x: 0, y: 0 });
   const isSmallMobile = tier === "smallMobile";
 
   useEffect(() => {
@@ -586,19 +586,11 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
     stageRef.current = stage;
   }, [stage]);
 
-  // The animation starts ONLY after the cursor moves.
+  // The animation starts automatically after 4.5 seconds
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (triggeredRef.current || stageRef.current !== "intro") return;
+    const initialTimer = window.setTimeout(() => {
+      if (stageRef.current !== "intro") return;
 
-      const previous = lastMouseRef.current;
-      const distance = Math.hypot(event.clientX - previous.x, event.clientY - previous.y);
-      lastMouseRef.current = { x: event.clientX, y: event.clientY };
-
-      // Ignore the tiny movement generated when the page first appears.
-      if (distance < 8) return;
-
-      triggeredRef.current = true;
       setStage("zoomOut");
 
       stageTimerRef.current = window.setTimeout(() => {
@@ -616,12 +608,10 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
           }, prefersReducedMotion ? 700 : 2300);
         }, prefersReducedMotion ? 550 : 1700);
       }, prefersReducedMotion ? 350 : 900);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
+    }, 4500);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.clearTimeout(initialTimer);
       if (stageTimerRef.current !== null) {
         window.clearTimeout(stageTimerRef.current);
       }
@@ -661,7 +651,6 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
         transformOrigin: "center center",
       }}
     >
-      {/* The same cinematic video language as the countdown page keeps the transition visually connected. */}
       <video
         autoPlay
         muted
@@ -727,7 +716,6 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
         }}
       />
 
-      {/* Image streams: title establishes first, then the images become visible. */}
       <div
         style={{
           position: "absolute",
@@ -799,7 +787,6 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
         })}
       </div>
 
-      {/* Main VIDYUT title. It is visible before the images and disappears during zoom. */}
       <motion.h1
         initial={{ opacity: 0, scale: 0.82 }}
         animate={{
@@ -825,40 +812,15 @@ export default function VidyutWormholeHero({ onComplete }: VidyutWormholeHeroPro
           pointerEvents: "none",
         }}
       >
-        VIDYUT
+        Growth Begins today
       </motion.h1>
 
-      {/* Small instruction: movement is the only trigger. */}
-      <motion.div
-        animate={{ opacity: stage === "intro" ? 0.72 : 0 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          position: "absolute",
-          zIndex: 11,
-          bottom: isSmallMobile ? "8%" : "7%",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          fontFamily: "'Frontage Bulb', sans-serif",
-          fontSize: isSmallMobile ? "0.5rem" : "0.68rem",
-          letterSpacing: "0.38em",
-          color: "rgba(220,235,255,0.82)",
-          paddingLeft: "0.38em",
-          pointerEvents: "none",
-          textShadow: "0 0 16px rgba(47,107,255,0.75)",
-        }}
-      >
-        MOVE TO CONTINUE
-      </motion.div>
-
-      {/* Scattered logo fragments assemble after the zoom-out. */}
       <LogoFragments
         stage={stage}
         tier={tier}
         prefersReducedMotion={prefersReducedMotion}
       />
 
-      {/* A soft energy field behind the assembling logo. */}
       <motion.div
         animate={{
           opacity: isLogoSequence ? 1 : 0,
