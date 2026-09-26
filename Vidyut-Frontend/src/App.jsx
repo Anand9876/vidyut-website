@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 
 import { TransformationProvider } from './context/TransformationContext';
-
 import { Preloader } from './components/Preloader';
-
-import VidyutWormholeHero from './components/Wormhole/VidyutWormholeHero';
-
 import { CustomCursor } from './components/CustomCursor';
-
 import { AmbientBackground } from './components/AmbientBackground';
-
 import { Navbar } from './components/Navbar';
-
 import { Hero } from './components/Hero';
-
 import { PassGenerator } from './components/PassGenerator';
-
 import { ShareModal } from './components/ShareModal';
 
 // Teammate's original VidyutIntro
@@ -23,6 +14,8 @@ import { VidyutIntro } from './components/VidyutIntro';
 
 // Our cinematic intro
 import MVidyutIntro from './components/VidyutIntroM/page';
+
+import { RippleTransition } from './components/RippleTransition';
 
 
 function FestApp() {
@@ -51,15 +44,15 @@ function FestApp() {
           ========================================================= */}
       {appStage === 'vidyut-intro' && (
         <MVidyutIntro
-          onComplete={() => setAppStage('grimoire-story')}
+          onComplete={() => setAppStage('ripple-transition')}
         />
       )}
 
       {/* =========================================================
-          STAGE 2: ORIGINAL 3D BOOK / GRIMOIRE
+          STAGE 2: RIPPLE TRANSITION
           ========================================================= */}
-      {appStage === 'grimoire-story' && (
-        <VidyutWormholeHero
+      {appStage === 'ripple-transition' && (
+        <RippleTransition 
           onComplete={() => setAppStage('main')}
         />
       )}

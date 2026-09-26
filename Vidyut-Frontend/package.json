@@ -13,7 +13,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cn": "^0.2.6",
-    "framer-motion": "^13.2.0",
+    "framer-motion": "^13.4.0",
     "lucide-react": "^1.16.0",
     "ogl": "^1.0.11",
     "radix-ui": "^1.6.7",
