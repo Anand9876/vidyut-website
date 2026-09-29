@@ -257,7 +257,9 @@ const InteractiveBackground = () => {
         const ox = sx - sw / 2 + sw * (i / 6), oy = topY;
         let target = -Math.PI / 2 + Math.sin(t * 0.0007 * (1 + i * 0.13) + i * 1.7) * 0.75;
         if (ptr.active && i % 2 === 0) target = Math.atan2(ptr.y - oy, ptr.x - ox);
-        b.ang += (target - b.ang) * 0.06;
+        const da = Math.atan2(Math.sin(target - b.ang), Math.cos(target - b.ang)); // shortest way round
+        b.ang += da * 0.06;
+        b.ang = Math.atan2(Math.sin(b.ang), Math.cos(b.ang));
         const L = h * 1.1, sp = 0.035 + (i % 2) * 0.015;
         g = ctx.createLinearGradient(ox, oy, ox + Math.cos(b.ang) * L, oy + Math.sin(b.ang) * L);
         g.addColorStop(0, rgba(b.c, 0.32 + pulse * 0.2)); g.addColorStop(0.6, rgba(b.c, 0.1)); g.addColorStop(1, rgba(b.c, 0));
@@ -290,7 +292,8 @@ const InteractiveBackground = () => {
           if (m.x < 0) m.x = w; if (m.x > w) m.x = 0; if (m.y < 0) m.y = hz; if (m.y > hz) m.y = 0;
           let lit = 0;
           for (let i = 0; i < 7; i++) {
-            const d = Math.abs(Math.atan2(m.y - topY, m.x - (sx - sw / 2 + sw * (i / 6))) - beams[i].ang);
+            const dd = Math.atan2(m.y - topY, m.x - (sx - sw / 2 + sw * (i / 6))) - beams[i].ang;
+            const d = Math.abs(Math.atan2(Math.sin(dd), Math.cos(dd)));
             if (d < 0.07) lit = Math.max(lit, 1 - d / 0.07);
           }
           ctx.fillStyle = `rgba(255,255,255,${(0.06 + lit * 0.7) * (0.6 + 0.4 * Math.sin(t * 0.003 + m.ph))})`;
@@ -834,13 +837,6 @@ export const Hero = ({ onNavbarReady }) => {
               <span>VIDYUT '25 ↗</span>
             </a>
           </div>
-
-          <p
-            className={`mt-6 font-montserrat text-[10px] sm:text-[11px] text-white/45 transition-all duration-700 ${reveal}`}
-            style={{ transitionDelay: shown ? '300ms' : '0ms' }}
-          >
-            Move your cursor to steer the stage lights. Tap or click to launch fireworks.
-          </p>
         </div>
       </div>
 
