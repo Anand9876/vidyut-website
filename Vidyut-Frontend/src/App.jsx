@@ -1,98 +1,109 @@
-import React, { useState } from 'react';
+
+import React, { useState, useCallback } from 'react';
 
 import { TransformationProvider } from './context/TransformationContext';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { AmbientBackground } from './components/AmbientBackground';
-import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PassGenerator } from './components/PassGenerator';
 import { ShareModal } from './components/ShareModal';
 
-// Teammate's original VidyutIntro
-import { VidyutIntro } from './components/VidyutIntro';
-
-// Our cinematic intro
 import MVidyutIntro from './components/VidyutIntroM/page';
-
 import { RippleTransition } from './components/RippleTransition';
-
 
 function FestApp() {
   const [appStage, setAppStage] = useState('preloader');
-  const [isNavVisible, setIsNavVisible] = useState(false);
+
+  // Normal intro completion: show the ripple.
+  const handleIntroComplete = useCallback(() => {
+    setAppStage(current =>
+      current === 'vidyut-intro'
+        ? 'ripple-transition'
+        : current
+    );
+  }, []);
+
+  // Skip button: go directly to the main website.
+  const handleSkipIntro = useCallback(() => {
+    setAppStage(current =>
+      current === 'vidyut-intro' ? 'main' : current
+    );
+  }, []);
+
+  // Show the main website immediately after the ripple finishes.
+  const handleRippleComplete = useCallback(() => {
+    setAppStage(current =>
+      current === 'ripple-transition' ? 'main' : current
+    );
+  }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black relative overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden bg-black text-white selection:bg-white selection:text-black">
 
-      {/* Background Particle & Subtle Lighting Engine */}
-
-      {/* Custom Precision Cursor */}
       <CustomCursor />
 
-      {/* =========================================================
-          STAGE 0: PRELOADER
-          ========================================================= */}
+      {/* STAGE 0: PRELOADER */}
       {appStage === 'preloader' && (
         <Preloader
           onComplete={() => setAppStage('vidyut-intro')}
         />
       )}
 
-      {/* =========================================================
-          STAGE 1: OUR NEW VIDYUT CINEMATIC PHOTO INTRO
-          ========================================================= */}
+      {/* STAGE 1: CINEMATIC VIDYUT INTRO */}
       {appStage === 'vidyut-intro' && (
-        <MVidyutIntro
-          onComplete={() => setAppStage('ripple-transition')}
-        />
-      )}
-
-      {/* =========================================================
-          STAGE 2: RIPPLE TRANSITION
-          ========================================================= */}
-      {appStage === 'ripple-transition' && (
-        <RippleTransition 
-          onComplete={() => setAppStage('main')}
-        />
-      )}
-
-      {/* =========================================================
-          AMBIENT BACKGROUND
-          Only starts with the main website.
-          ========================================================= */}
-      {appStage === 'main' && <AmbientBackground />}
-
-      {/* =========================================================
-          STAGE 3: MAIN VIDYUT WEBSITE
-          ========================================================= */}
-      <div
-        className={`transition-opacity duration-1000 relative z-10 ${
-          appStage === 'main'
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <Navbar isNavVisible={isNavVisible} />
-
-        <main>
-          <Hero
-            onNavbarReady={() => setIsNavVisible(true)}
+        <div
+          className="fixed inset-0 z-40"
+          onClick={handleIntroComplete}
+        >
+          <MVidyutIntro
+            onComplete={handleIntroComplete}
           />
-        </main>
-      </div>
 
-      {/* =========================================================
-          INTERACTIVE MODALS
-          ========================================================= */}
-      <PassGenerator />
+          {/* SKIP INTRO BUTTON */}
+          <button
+            type="button"
+            onClick={event => {
+              event.stopPropagation();
+              handleSkipIntro();
+            }}
+            className="fixed right-6 top-6 z-[100] rounded-full border border-cyan-300/60 bg-black/70 px-5 py-3 font-mono text-xs font-bold tracking-[0.2em] text-cyan-200 backdrop-blur-md transition-all duration-300 hover:border-cyan-200 hover:bg-cyan-300 hover:text-black sm:right-10 sm:top-8 sm:px-7 sm:py-3.5 sm:text-sm"
+            aria-label="Skip intro and go to the main Vidyut website"
+          >
+            SKIP INTRO <span className="ml-2">↗</span>
+          </button>
+        </div>
+      )}
 
-      <ShareModal />
+      {/* STAGE 2: RIPPLE TRANSITION */}
+      {appStage === 'ripple-transition' && (
+        <RippleTransition
+          onComplete={handleRippleComplete}
+        />
+      )}
+
+      {/* STAGE 3: MAIN WEBSITE */}
+      {appStage === 'main' && (
+        <>
+          <AmbientBackground />
+
+          <div className="relative z-10">
+            <main>
+              <Hero
+                start={true}
+                onNavbarReady={() => {}}
+              />
+            </main>
+          </div>
+
+          <PassGenerator />
+          <ShareModal />
+        </>
+      )}
 
     </div>
   );
 }
-
 
 export default function App() {
   return (

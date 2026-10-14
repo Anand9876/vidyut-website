@@ -3567,3 +3567,68 @@ and (orientation: landscape) {
       190px !important;
   }
 }
+
+/* VIDYUT PERFORMANCE FIX */
+
+/* Prevent unnecessary image layers from being promoted */
+.montage-image {
+  will-change: auto !important;
+  transition: none !important;
+}
+
+/* Keep animations limited to the visible image */
+.montage-image:not(.active) {
+  animation: none !important;
+}
+
+/* Remove the constantly moving grain effect */
+.grain {
+  animation: none !important;
+  opacity: 0.015;
+}
+
+/* Reduce expensive glow and blur effects */
+@media (max-width: 700px) {
+  .intro-blue,
+  .intro-crimson,
+  .logo-bg-blue,
+  .logo-bg-crimson,
+  .final-blue,
+  .final-crimson {
+    filter: none !important;
+  }
+
+  .convergence-light {
+    filter: none !important;
+    animation: none !important;
+  }
+
+  .vidyut-image {
+    filter: none !important;
+  }
+
+  .montage-image {
+    filter: brightness(0.8) !important;
+  }
+
+  .blue-grade,
+  .crimson-grade {
+    mix-blend-mode: normal !important;
+  }
+}
+
+/* Ensure the intro has a visible background if images fail */
+.cinematic,
+.montage,
+.convergence,
+.logo-scene,
+.final {
+  background-color: #000 !important;
+}
+
+/* Respect devices that request reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none !important;
+  }
+}
