@@ -30,6 +30,9 @@ const ABOUT_TEXT =
 
 const ACCENT = '#ff9a5c';
 
+// Matches the CSS breakpoints so JS and CSS always agree
+const SHOW_MODEL_QUERY = '(min-width: 900px) and (min-height: 521px)';
+
 const clamp01 = value => Math.max(0, Math.min(1, value));
 
 const easeInOut = u =>
@@ -62,6 +65,29 @@ function useCountdown(target) {
   }, [target]);
 
   return timeLeft;
+}
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia(query).matches
+      : false
+  );
+
+  useEffect(() => {
+    if (!window.matchMedia) return undefined;
+    const mq = window.matchMedia(query);
+    const onChange = e => setMatches(e.matches);
+    setMatches(mq.matches);
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else mq.addListener(onChange);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', onChange);
+      else mq.removeListener(onChange);
+    };
+  }, [query]);
+
+  return matches;
 }
 
 function useVisibleGate(rootRef, start) {
@@ -338,7 +364,8 @@ function buildFrame(w, h, cy) {
   return {
     outline,
     accents,
-    bars: bars.join(' '),
+    // side bars collide with text on narrow screens, so hide them there
+    bars: w < 640 ? '' : bars.join(' '),
     ticks: ticks.join(' '),
   };
 }
@@ -474,18 +501,20 @@ function HudFrame({ active }) {
               }}
             />
           ))}
-          <path
-            d={lines.bars}
-            fill="none"
-            stroke="#ff7ab0"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            style={{
-              ...fade,
-              filter:
-                'drop-shadow(0 0 5px rgba(255,80,140,0.8))',
-            }}
-          />
+          {lines.bars && (
+            <path
+              d={lines.bars}
+              fill="none"
+              stroke="#ff7ab0"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              style={{
+                ...fade,
+                filter:
+                  'drop-shadow(0 0 5px rgba(255,80,140,0.8))',
+              }}
+            />
+          )}
           <path
             d={lines.ticks}
             fill="none"
@@ -841,6 +870,9 @@ function HeroScene({ onNavbarReady, start }) {
   const fontsReady = usePageReady();
   const inkShift = useInkAlign(titleRef, copyRef, fontsReady);
 
+  // 3D model is mounted on desktop only
+  const showModel = useMediaQuery(SHOW_MODEL_QUERY);
+
   const visible = useVisibleGate(rootRef, start);
   const stage = useIntroStage(onNavbarReady, visible);
 
@@ -901,7 +933,7 @@ function HeroScene({ onNavbarReady, start }) {
               VIDYUT
             </h1>
 
-            <div className="hero-body">
+            <div className={`hero-body ${showModel ? '' : 'no-model'}`}>
               <div
                 ref={copyRef}
                 className="hero-copy"
@@ -927,18 +959,20 @@ function HeroScene({ onNavbarReady, start }) {
                 </div>
               </div>
 
-              <div
-                className="hero-model-wrapper"
-                style={{
-                  opacity: contentOn ? 1 : 0,
-                  transform: contentOn
-                    ? 'translate3d(0,0,0) scale(1)'
-                    : 'translate3d(0,18px,0) scale(0.985)',
-                  pointerEvents: contentOn ? 'auto' : 'none',
-                }}
-              >
-                <EnergyCore />
-              </div>
+              {showModel && (
+                <div
+                  className="hero-model-wrapper"
+                  style={{
+                    opacity: contentOn ? 1 : 0,
+                    transform: contentOn
+                      ? 'translate3d(0,0,0) scale(1)'
+                      : 'translate3d(0,18px,0) scale(0.985)',
+                    pointerEvents: contentOn ? 'auto' : 'none',
+                  }}
+                >
+                  <EnergyCore />
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -1152,7 +1186,7 @@ const STYLES = `
     text-shadow: 0 2px 12px rgba(0,0,0,0.7);
   }
 
-  /* ---------- 3D Model ---------- */
+  /* ---------- 3D Model (desktop only) ---------- */
   .hero-model-wrapper {
     min-width: 0;
     min-height: 0;
@@ -1321,38 +1355,26 @@ const STYLES = `
     html, body { overflow-x: hidden; }
     .vidyut-page { height: auto; min-height: 100svh; overflow: visible; }
     .page-frame { height: auto; min-height: 100svh; }
-    .hero-section { flex: 0 0 auto; }
+    .hero-section { flex: 1 0 auto; }
     .vidyut-canvas { --title-start-top: calc(50svh - 40px); height: auto; }
     .hero-body { flex: 0 0 auto; }
     .hud-frame { position: fixed; }
+    /* short desktop windows: model keeps a fixed height instead of stretching */
     .hero-model-wrapper { height: 560px; max-height: none; margin-top: 0; }
     .hero-clock { margin-top: clamp(16px, 4vh, 36px); padding-bottom: 12px; }
   }
 
   @media (max-width: 899px) {
-    .hero-body {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      gap: 28px;
-    }
-    .hero-model-wrapper {
-      width: 100%;
-      max-width: none;
-      min-height: 380px;
-      height: min(75svh, 600px);
-      align-self: stretch;
-      justify-self: stretch;
-    }
     .copy-blurb { max-width: none; }
   }
 
   @media (max-width: 639px) {
-    .page-frame { padding: 36px 20px; gap: 8px; }
-    .vidyut-canvas { --title-size: clamp(72px, min(30vw, 18vh), 160px); --title-scale: 0.8; }
+    .page-frame { padding: 40px 28px 64px; gap: 8px; }
+    /* title size follows the available width, so it always fits */
+    .vidyut-canvas { --title-size: calc((100vw - 56px) / 5); --title-scale: 1; }
     .copy-line-1 p { font-size: clamp(22px, 6.4vw, 30px); letter-spacing: 0.06em; }
     .copy-line-2 p, .copy-line-3 p { font-size: clamp(18px, 5.4vw, 24px); letter-spacing: 0.05em; }
     .copy-blurb { font-size: 17px; }
-    .hero-model-wrapper { min-height: 340px; height: min(72svh, 500px); }
     .hero-clock { --timer-size: clamp(30px, 11.5vw, 52px); max-width: 100%; }
     .timer-num-outline { -webkit-text-stroke-width: 2px; }
     .clock-units { gap: 10px; }
@@ -1363,7 +1385,7 @@ const STYLES = `
   /* Large / ultrawide screens */
   @media (min-width: 1600px) {
     .vidyut-canvas { max-width: 1600px; }
-    
+
     .hero-clock { max-width: 820px; }
   }
 
@@ -1371,14 +1393,13 @@ const STYLES = `
   @media (min-width: 640px) and (max-width: 899px) {
     .page-frame { padding: 44px 40px; }
     .vidyut-canvas { --title-size: clamp(100px, 21vw, 190px); }
-    .hero-model-wrapper { height: min(68svh, 680px); }
     .hero-clock { max-width: 560px; }
   }
 
   /* Small phones */
   @media (max-width: 380px) {
-    .page-frame { padding: 32px 14px; }
-    .vidyut-canvas { --title-size: clamp(64px, 28vw, 110px); }
+    .page-frame { padding: 36px 22px 60px; }
+    .vidyut-canvas { --title-size: calc((100vw - 44px) / 5); }
     .copy-line-1 p { font-size: 20px; letter-spacing: 0.04em; }
     .copy-line-2 p, .copy-line-3 p { font-size: 16px; letter-spacing: 0.03em; }
     .copy-blurb { font-size: 15px; line-height: 1.7; }
@@ -1386,14 +1407,11 @@ const STYLES = `
     .clock-units { gap: 6px; }
     .timer-slash { display: none; }
     .clock-footer { flex-direction: column; gap: 4px; }
-    .hero-model-wrapper { min-height: 320px; height: min(66svh, 440px); }
   }
 
   /* Landscape phones (short and wide) */
   @media (max-height: 520px) and (orientation: landscape) {
     .vidyut-canvas { --title-size: clamp(52px, 16vh, 90px); --title-offset: 16px; }
-    .hero-body { grid-template-columns: 1fr 1fr; }
-    .hero-model-wrapper { height: min(80vh, 400px); min-height: 0; }
     .copy-line { margin-bottom: 6px; }
   }
 
@@ -1401,4 +1419,19 @@ const STYLES = `
   @media (prefers-reduced-motion: reduce) {
     .copy-line { animation: none; }
   }
+
+  /* Mobile / small screens: no 3D model, single-column layout.
+     Kept last so it wins over earlier rules. */
+  @media (max-width: 899px), (max-height: 520px) {
+    .hero-model-wrapper { display: none !important; }
+    .hero-body,
+    .hero-body.no-model {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
+    }
+    .hero-copy { max-width: 100%; }
+  }
+
+  /* Desktop with no model for any reason: keep the text readable */
+  .hero-body.no-model .copy-blurb { max-width: 640px; }
 `;

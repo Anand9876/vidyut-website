@@ -13,25 +13,13 @@ import image8 from "../../assets/img8.jpeg";
 import image9 from "../../assets/img9.jpeg";
 import image10 from "../../assets/img10.jpeg";
 import image11 from "../../assets/img11.jpeg";
-import image12 from "../../assets/img12.jpeg";
-import image13 from "../../assets/img13.jpeg";
-import image14 from "../../assets/img14.jpeg";
-import image15 from "../../assets/img15.jpeg";
-import image16 from "../../assets/img16.jpeg";
-import image17 from "../../assets/img17.jpeg";
 
 
 /* =========================================================
    IMAGES
-
-   Two groups:
-   - GROUP_A (img1-11): only a few of these are used
-   - GROUP_B (img12-17): all of these are used
-   The final playlist is shuffled, so the order is different
-   every time the page loads.
 ========================================================= */
 
-const GROUP_A = [
+const images = [
   image1,
   image2,
   image3,
@@ -45,48 +33,7 @@ const GROUP_A = [
   image11,
 ];
 
-const GROUP_B = [
-  image12,
-  image13,
-  image14,
-  image15,
-  image16,
-  image17,
-];
-
-/* how many random photos to take from img1-11 (fewer) */
-const GROUP_A_SHOW = 4;
-
-function shuffle(list) {
-
-  const copy = [...list];
-
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-
-    const j = Math.floor(Math.random() * (i + 1));
-
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-
-  return copy;
-}
-
-/* picks a few from A, adds all of B, shuffles everything */
-
-function buildPlaylist() {
-
-  const few = shuffle(GROUP_A).slice(0, GROUP_A_SHOW);
-
-  return shuffle([...few, ...GROUP_B]);
-}
-
-const images = buildPlaylist();
-
 const COUNT = images.length;
-
-/* How many movement-N classes exist in global.css (movement-0 ... movement-10).
-   Extra photos reuse the same camera moves. Change if your CSS differs. */
-const MOVEMENT_COUNT = 11;
 
 
 /* =========================================================
@@ -467,15 +414,7 @@ let prepared = null;
 
 let preparing = null;
 
-const progressListeners = new Set();
-
-let progressCount = 0;
-
-function prepareAssets(onProgress) {
-
-  progressListeners.add(onProgress);
-
-  onProgress(progressCount);
+function prepareAssets() {
 
   if (prepared) {
     return Promise.resolve(prepared);
@@ -495,12 +434,6 @@ function prepareAssets(onProgress) {
     buildVariants(src).then((variant) => {
 
       results[index] = variant;
-
-      progressCount += 1;
-
-      progressListeners.forEach((fn) =>
-        fn(progressCount)
-      );
     })
   );
 
@@ -538,9 +471,6 @@ export function VidyutIntro({ onComplete }) {
   const [assets, setAssets] =
     useState(null);
 
-  const [loaded, setLoaded] =
-    useState(0);
-
   const [phase, setPhase] =
     useState("montage");
 
@@ -572,17 +502,12 @@ export function VidyutIntro({ onComplete }) {
 
     let cancelled = false;
 
-    const onProgress = (count) => {
-      if (!cancelled) setLoaded(count);
-    };
-
-    prepareAssets(onProgress).then((result) => {
+    prepareAssets().then((result) => {
       if (!cancelled) setAssets(result);
     });
 
     return () => {
       cancelled = true;
-      progressListeners.delete(onProgress);
     };
 
   }, []);
@@ -672,32 +597,11 @@ export function VidyutIntro({ onComplete }) {
      LOADING SCREEN
   ======================================================= */
 
+  /* images still loading: plain black, nothing animated */
+
   if (!assets) {
 
-    return (
-
-      <main className="cinematic">
-
-        <div className="vignette" />
-
-        <div className="loader">
-
-          <div className="loader-core" />
-
-          <div className="loader-bar">
-            <div
-              style={{
-                width: `${
-                  (loaded / COUNT) * 100
-                }%`,
-              }}
-            />
-          </div>
-
-        </div>
-
-      </main>
-    );
+    return <main className="cinematic" />;
   }
 
 
@@ -771,7 +675,7 @@ export function VidyutIntro({ onComplete }) {
               key={index}
               className={[
                 "montage-image",
-                `movement-${index % MOVEMENT_COUNT}`,
+                `movement-${index}`,
                 asset.baked ? "is-baked" : "",
                 index === active
                   ? "active"

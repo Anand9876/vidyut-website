@@ -76,53 +76,6 @@ body {
 
 
 /* =========================================================
-   LOADER (shown while images + font are prepared)
-========================================================= */
-
-.loader {
-  position: absolute;
-  inset: 0;
-  z-index: 120;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 26px;
-  pointer-events: none;
-}
-
-.loader-core {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow:
-    0 0 12px #ffffff,
-    0 0 40px #00e5ff,
-    0 0 90px rgba(124, 60, 255, 0.8);
-  animation: loaderPulse 1.1s ease-in-out infinite;
-}
-
-@keyframes loaderPulse {
-  0%, 100% { transform: scale(0.75); opacity: 0.75; }
-  50%      { transform: scale(1.45); opacity: 1; }
-}
-
-.loader-bar {
-  width: min(38vw, 220px);
-  height: 2px;
-  background: rgba(0, 229, 255, 0.1);
-  overflow: hidden;
-}
-
-.loader-bar div {
-  height: 100%;
-  background: linear-gradient(90deg, #00e5ff, #7c3cff, #ff1744);
-  transition: width 0.2s ease-out;
-}
-
-
-/* =========================================================
    VIGNETTE
 ========================================================= */
 
