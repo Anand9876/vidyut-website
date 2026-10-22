@@ -13,7 +13,8 @@ body {
   background-color: #000000;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  overflow-x: hidden;
+  /* clip (not hidden) so position: sticky works in the History section */
+  overflow-x: clip;
 }
 
 /* Custom Scrollbar */

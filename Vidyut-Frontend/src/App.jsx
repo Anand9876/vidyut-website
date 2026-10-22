@@ -1,11 +1,11 @@
-
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { TransformationProvider } from './context/TransformationContext';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { AmbientBackground } from './components/AmbientBackground';
 import { Hero } from './components/Hero';
+import { History } from './components/History';
 import { PassGenerator } from './components/PassGenerator';
 import { ShareModal } from './components/ShareModal';
 
@@ -38,8 +38,40 @@ function FestApp() {
     );
   }, []);
 
+  // Once the main website is showing, make sure nothing left over from the
+  // preloader / intro / ripple stages is blocking page scroll.
+  //
+  // IMPORTANT: only <html> may carry an overflow rule. If <body> gets
+  // overflow-y: auto (or hidden / scroll), body turns into its own scroll
+  // container and `position: sticky` stops working everywhere on the page,
+  // which is what stopped the History section from pinning.
+  useEffect(() => {
+    if (appStage !== 'main') return undefined;
+
+    const unlock = () => {
+      const root = document.documentElement;
+      const body = document.body;
+      root.classList.remove('overflow-hidden');
+      body.classList.remove('overflow-hidden');
+
+      root.style.setProperty('overflow-y', 'auto', 'important');
+      root.style.setProperty('height', 'auto', 'important');
+
+      // body must NOT be a scroll container
+      body.style.setProperty('overflow-y', 'visible', 'important');
+      body.style.setProperty('height', 'auto', 'important');
+      body.style.setProperty('position', 'static', 'important');
+      body.style.setProperty('touch-action', 'auto', 'important');
+    };
+
+    unlock();
+    const timer = setTimeout(unlock, 1500);
+    return () => clearTimeout(timer);
+  }, [appStage]);
+
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-black text-white selection:bg-white selection:text-black">
+    // overflow-x-clip (not hidden) so the sticky History section can stick
+    <div className="relative min-h-screen overflow-x-clip bg-black text-white selection:bg-white selection:text-black">
 
       <CustomCursor />
 
@@ -93,6 +125,7 @@ function FestApp() {
                 start={true}
                 onNavbarReady={() => {}}
               />
+              <History />
             </main>
           </div>
 

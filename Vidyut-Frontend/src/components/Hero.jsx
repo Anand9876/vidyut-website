@@ -159,35 +159,44 @@ function useIntroStage(onNavbarReady, visible) {
   return stage;
 }
 
-function usePageLock() {
+// Starts the page at the top, and (while `locked` is true) stops the visitor
+// from scrolling away during the intro. It blocks scroll input instead of
+// changing overflow styles, so nothing can get stuck in a locked state.
+// A fail-safe releases the lock after 12 seconds no matter what.
+function usePageLock(locked) {
+  const [expired, setExpired] = useState(false);
+
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
-    const prevRoot = root.style.overflow;
-    const prevBody = body.style.overflow;
-    const prevMargin = body.style.margin;
+    const timer = setTimeout(() => setExpired(true), 12000);
+    return () => clearTimeout(timer);
+  }, []);
 
-    // Lock the page only on roomy screens; phones/small windows scroll normally
-    const apply = () => {
-      const lock = window.innerWidth >= 900 && window.innerHeight >= 800;
-      root.style.overflow = lock ? 'hidden' : prevRoot;
-      body.style.overflow = lock ? 'hidden' : prevBody;
-      body.style.margin = '0';
+  useEffect(() => {
+    if (!locked || expired) return undefined;
+
+    const block = e => e.preventDefault();
+    const blockKeys = e => {
+      const tag = e.target && e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if ([' ', 'PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'End', 'Home'].includes(e.key)) {
+        e.preventDefault();
+      }
     };
-    apply();
-    window.addEventListener('resize', apply);
+
+    window.addEventListener('wheel', block, { passive: false });
+    window.addEventListener('touchmove', block, { passive: false });
+    window.addEventListener('keydown', blockKeys);
 
     return () => {
-      window.removeEventListener('resize', apply);
-      root.style.overflow = prevRoot;
-      body.style.overflow = prevBody;
-      body.style.margin = prevMargin;
+      window.removeEventListener('wheel', block);
+      window.removeEventListener('touchmove', block);
+      window.removeEventListener('keydown', blockKeys);
     };
-  }, []);
+  }, [locked, expired]);
 }
 
 function useTypedBlock(
@@ -876,7 +885,9 @@ function HeroScene({ onNavbarReady, start }) {
   const visible = useVisibleGate(rootRef, start);
   const stage = useIntroStage(onNavbarReady, visible);
 
-  usePageLock();
+  // Scrolling is blocked during the intro and opens up once the countdown
+  // appears, which is when the History section becomes reachable.
+  usePageLock(stage < STAGE.CLOCK);
 
   const contentOn = stage >= STAGE.CONTENT;
   const typedCopy = useTypedBlock(COPY_LINES, contentOn);
@@ -1352,7 +1363,7 @@ const STYLES = `
 
   /* ---------- Responsive ---------- */
   @media (max-width: 899px), (max-height: 799px) {
-    html, body { overflow-x: hidden; }
+    html, body { overflow-x: clip; }
     .vidyut-page { height: auto; min-height: 100svh; overflow: visible; }
     .page-frame { height: auto; min-height: 100svh; }
     .hero-section { flex: 1 0 auto; }
